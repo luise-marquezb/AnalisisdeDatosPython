@@ -1,0 +1,51 @@
+Fecha,Cliente,Producto,Cantidad,Precio Unitario,Total,Origen
+2023-11-01,Cliente1,ProductoA,5,10,50,Online
+2023-11-02,Cliente2,ProductoB,3,15,45,Online
+2023-11-03,Cliente3,ProductoC,2,20,40,Online
+2023-11-04,Cliente4,ProductoA,4,10,40,Tienda Física
+2023-11-05,Cliente5,ProductoD,1,30,30,Online
+2023-11-06,Cliente6,ProductoB,2,15,30,Online
+2023-11-07,Cliente7,ProductoA,3,10,30,Tienda Física
+2023-11-08,Cliente8,ProductoC,2,20,40,Online
+2023-11-09,Cliente9,ProductoD,4,30,120,Online
+2023-11-10,Cliente10,ProductoA,3,10,30,Tienda Física
+2023-11-11,Cliente11,ProductoB,5,15,75,Online
+2023-11-12,Cliente12,ProductoC,2,20,40,Online
+2023-11-13,Cliente13,ProductoD,1,30,30,Tienda Física
+2023-11-14,Cliente14,ProductoA,3,10,30,Online
+2023-11-15,Cliente15,ProductoB,4,15,60,Online
+2023-11-16,Cliente16,ProductoC,2,20,40,Tienda Física
+2023-11-17,Cliente17,ProductoD,3,30,90,Online
+2023-11-18,Cliente18,ProductoA,4,10,40,Online
+2023-11-19,Cliente19,ProductoB,2,15,30,Tienda Física
+2023-11-20,Cliente20,ProductoC,3,20,60,Online
+2023-11-21,Cliente21,ProductoD,1,30,30,Online
+2023-11-22,Cliente22,ProductoA,5,10,50,Tienda Física
+2023-11-23,Cliente23,ProductoB,3,15,45,Online
+2023-11-24,Cliente24,ProductoC,2,20,40,Online
+2023-11-25,Cliente25,ProductoD,4,30,120,Tienda Física
+2023-11-26,Cliente26,ProductoA,3,10,30,Online
+2023-11-27,Cliente27,ProductoB,5,15,75,Online
+2023-11-28,Cliente28,ProductoC,2,20,40,Online
+2023-11-29,Cliente29,ProductoD,1,30,30,Tienda Física
+2023-11-30,Cliente30,ProductoA,2,10,20,Online
+2023-12-01,Cliente31,ProductoB,4,15,60,Online
+2023-12-02,Cliente32,ProductoC,3,20,60,Tienda Física
+2023-12-03,Cliente33,ProductoD,1,30,30,Online
+2023-12-04,Cliente34,ProductoA,3,10,30,Online
+2023-12-05,Cliente35,ProductoB,2,15,30,Online
+2023-12-06,Cliente36,ProductoC,5,20,100,Tienda Física
+2023-12-07,Cliente37,ProductoD,4,30,120,Online
+2023-12-08,Cliente38,ProductoA,2,10,20,Online
+2023-12-09,Cliente39,ProductoB,3,15,45,Online
+2023-12-10,Cliente40,ProductoC,1,20,20,Tienda Física
+2023-12-11,Cliente41,ProductoD,5,30,150,Online
+2023-12-12,Cliente42,ProductoA,4,10,40,Online
+2023-12-13,Cliente43,ProductoB,2,15,30,Online
+2023-12-14,Cliente44,ProductoC,3,20,60,Tienda Física
+2023-12-15,Cliente45,ProductoD,2,30,60,Online
+2023-12-16,Cliente46,ProductoA,1,10,10,Online
+2023-12-17,Cliente47,ProductoB,5,15,75,Online
+2023-12-18,Cliente48,ProductoC,4,20,80,Tienda Física
+2023-12-19,Cliente49,ProductoD,3,30,90,Online
+2023-12-20,Cliente50,ProductoA,2,10,20,Online
