@@ -1,0 +1,44 @@
+{
+    "ingresos": [
+        {
+            "nombre": "Felipe",
+            "fecha": "2025-01-11",
+            "importe": 10.0
+        },
+        {
+            "nombre": "Daniel Riojas",
+            "fecha": "2025-01-11",
+            "importe": 40.0
+        },
+        {
+            "nombre": "Doris Rioja",
+            "fecha": "2025-01-11",
+            "importe": 40.0
+        },
+        {
+            "nombre": "Alan Guillen",
+            "fecha": "2025-01-11",
+            "importe": 40.0
+        },
+        {
+            "nombre": "Carlos Padilla",
+            "fecha": "2025-01-11",
+            "importe": 20.0
+        },
+        {
+            "nombre": "Milagros Ecos",
+            "fecha": "2025-01-11",
+            "importe": 20.0
+        }
+    ],
+    "egresos": [
+        {
+            "fecha": "2025-01-11",
+            "descripcion": "Agua 7L (6 soles) + 3 Ecos (1 sol c/u) + Limones (2 soles)",
+            "metodo": "Transferencia",
+            "mes": "Enero",
+            "importe": 11.0
+        }
+    ],
+    "usuarios": []
+}
