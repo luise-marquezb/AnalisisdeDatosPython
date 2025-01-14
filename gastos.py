@@ -21,45 +21,60 @@ def save_data(data):
 def display_dashboard(data):
     st.header("Dashboard de Ingresos y Egresos")
 
-    # --- Filtro por mes
-    meses = sorted(set([item['mes'] for item in data['egresos']] + [item['fecha'].split('-')[1] for item in data['ingresos']]))
-    mes_seleccionado = st.selectbox("Filtrar por Mes", ['Todos'] + meses)
+    # El filtro de mes ya no es seleccionable
+    mes_seleccionado = 'Todos'
 
-    # --- Filtrar por mes los ingresos y egresos
-    if mes_seleccionado != 'Todos':
-      filtered_ingresos = [ingreso for ingreso in data['ingresos'] if ingreso['fecha'].split('-')[1] == mes_seleccionado]
-      filtered_egresos = [egreso for egreso in data['egresos'] if egreso['mes'] == mes_seleccionado]
-    else:
-      filtered_ingresos = data['ingresos']
-      filtered_egresos = data['egresos']
 
     # --- Calcula totales
-    total_ingresos = sum(item['importe'] for item in filtered_ingresos)
-    total_egresos = sum(item['importe'] for item in filtered_egresos)
+    total_ingresos = sum(item['importe'] for item in data['ingresos'])
+    total_egresos = sum(item['importe'] for item in data['egresos'])
     saldo = total_ingresos - total_egresos
 
     st.write(f"Total Ingresos: {total_ingresos:.2f}")
     st.write(f"Total Egresos: {total_egresos:.2f}")
     st.write(f"Saldo Actual: {saldo:.2f}")
 
-    # --- Gráfico de ingresos vs egresos
-    if filtered_ingresos or filtered_egresos:
-        df_ingresos = pd.DataFrame(filtered_ingresos)
-        df_egresos = pd.DataFrame(filtered_egresos)
+    # --- Preparación de datos para el gráfico
+    if data['ingresos'] or data['egresos']:
+        df_ingresos = pd.DataFrame(data['ingresos'])
+        df_egresos = pd.DataFrame(data['egresos'])
 
-        df_ingresos['tipo'] = 'Ingreso'
-        df_egresos['tipo'] = 'Egreso'
-        df_ingresos['importe'] = df_ingresos['importe'].astype(float)
-        df_egresos['importe'] = df_egresos['importe'].astype(float)
+        # Verificar la existencia de la columna fecha y aplicar el formato correcto
+        if not df_ingresos.empty:
+            df_ingresos['mes_año'] = df_ingresos['fecha'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d').strftime('%Y-%m'))
+        
+        if not df_egresos.empty:
+            df_egresos['mes_año'] = df_egresos['fecha'].apply(lambda x: datetime.strptime(x, '%Y-%m-%d').strftime('%Y-%m'))
 
+        # Agrupar por mes y calcular totales
+        if not df_ingresos.empty:
+            ingresos_mensuales = df_ingresos.groupby('mes_año')['importe'].sum().reset_index()
+        else:
+           ingresos_mensuales = pd.DataFrame(columns = ['mes_año', 'importe'])
+        if not df_egresos.empty:
+           egresos_mensuales = df_egresos.groupby('mes_año')['importe'].sum().reset_index()
+        else:
+          egresos_mensuales = pd.DataFrame(columns = ['mes_año', 'importe'])
+        
+        # Unir en un solo df
+        df_unido = pd.merge(ingresos_mensuales, egresos_mensuales, on='mes_año', suffixes=('_ingresos', '_egresos'), how='outer').fillna(0)
 
-        df_combined = pd.concat([df_ingresos[['fecha', 'importe','tipo']], df_egresos[['fecha', 'importe', 'tipo']]], ignore_index=True)
-
-        fig = px.bar(df_combined, x='fecha', y='importe', color='tipo', title='Ingresos vs Egresos del Mes',
-                  labels={'importe': 'Importe', 'fecha': 'Fecha'})
+        # Transformar el dataframe para el grafico agrupado
+        df_unido_melted = pd.melt(df_unido, id_vars=['mes_año'], value_vars=['importe_ingresos','importe_egresos'],
+                                    var_name = 'tipo', value_name = 'importe')
+        
+        df_unido_melted['tipo'] = df_unido_melted['tipo'].replace({'importe_ingresos':'Ingresos', 'importe_egresos':'Egresos'})
+        
+        # Crear el gráfico de barras agrupadas
+        fig = px.bar(df_unido_melted, x='mes_año', y='importe', color='tipo',
+                     title='Ingresos vs Egresos Mensuales',
+                     labels={'importe': 'Importe', 'mes_año': 'Mes'},
+                     barmode='group')
         st.plotly_chart(fig)
+
     else:
       st.write("No hay datos para mostrar en el gráfico")
+
 
 
 def display_consultar_ingresos(data):
@@ -81,18 +96,19 @@ def display_consultar_ingresos(data):
     else:
         st.write("No se encontraron ingresos para los filtros seleccionados.")
 
-
 # --- Funciones de formularios ---
 def input_ingresos(data):
     st.header("Registro de Ingresos")
     nombre = st.text_input("Nombre de quien hace el ingreso")
     fecha_ingreso = st.date_input("Fecha del Ingreso")
+    metodo_pago = st.selectbox("Método de Pago", ["Yape", "Plin", "Efectivo", "Transferencia", "Otro"])
     importe = st.number_input("Importe del Ingreso", min_value=0.0)
 
     if st.button("Registrar Ingreso"):
         data['ingresos'].append({
             'nombre': nombre,
             'fecha': fecha_ingreso.strftime('%Y-%m-%d'),
+            'metodo': metodo_pago,
             'importe': importe
         })
         save_data(data)
@@ -152,12 +168,15 @@ def manage_data(data, type):
                     nombre = st.text_input("Nombre:", value = selected_item['nombre'])
                     fecha = st.date_input("Fecha:", value=datetime.strptime(selected_item['fecha'], '%Y-%m-%d').date() if selected_item['fecha'] else None)
                     importe = st.number_input("Importe:", value=selected_item['importe'])
-                    
+                    metodo_pago = st.selectbox("Método de Pago", ["Yape", "Plin", "Efectivo", "Transferencia", "Otro"], index = ["Yape", "Plin", "Efectivo", "Transferencia", "Otro"].index(selected_item['metodo']))
+
                     if st.button("Guardar cambios"):
                         index = data['ingresos'].index(selected_item)
                         data['ingresos'][index] = {'nombre': nombre,
                           'fecha': fecha.strftime('%Y-%m-%d'),
-                          'importe': importe}
+                          'importe': importe,
+                           'metodo': metodo_pago,
+                           }
                         save_data(data)
                         st.success(f"{type[:-1]} modificado correctamente")
             with col2:
@@ -238,8 +257,7 @@ def main():
     elif menu == "Gestionar Ingresos":
         manage_data(data, "ingresos")
     elif menu == "Gestionar Egresos":
-      manage_data(data, "egresos")
-
+        manage_data(data, "egresos")
 
 if __name__ == '__main__':
     main()
