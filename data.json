@@ -3,31 +3,49 @@
         {
             "nombre": "Felipe",
             "fecha": "2025-01-11",
+            "metodo": "Efectivo",
             "importe": 10.0
-        },
-        {
-            "nombre": "Daniel Riojas",
-            "fecha": "2025-01-11",
-            "importe": 40.0
-        },
-        {
-            "nombre": "Doris Rioja",
-            "fecha": "2025-01-11",
-            "importe": 40.0
         },
         {
             "nombre": "Alan Guillen",
             "fecha": "2025-01-11",
+            "metodo": "Plin",
+            "importe": 40.0
+        },
+        {
+            "nombre": "Doris Riojas",
+            "fecha": "2025-01-11",
+            "metodo": "Efectivo",
+            "importe": 40.0
+        },
+        {
+            "nombre": "Daniel Riojas",
+            "fecha": "2025-01-11",
+            "metodo": "Efectivo",
             "importe": 40.0
         },
         {
             "nombre": "Carlos Padilla",
             "fecha": "2025-01-11",
+            "metodo": "Efectivo",
             "importe": 20.0
         },
         {
             "nombre": "Milagros Ecos",
             "fecha": "2025-01-11",
+            "metodo": "Efectivo",
+            "importe": 20.0
+        },
+        {
+            "nombre": "Luis Marquez",
+            "fecha": "2025-01-13",
+            "metodo": "Plin",
+            "importe": 20.0
+        },
+        {
+            "nombre": "Esther Plasencia",
+            "fecha": "2025-01-13",
+            "metodo": "Plin",
             "importe": 20.0
         }
     ],
